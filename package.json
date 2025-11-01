@@ -13,7 +13,8 @@
     "e2e": "cypress open --browser edge",
     "e2e:headless": "cypress run --browser edge",
     "test:all": "node run-tests.js all",
-    "serve:ssr:employee-app": "node dist/employee-app/server/server.mjs"
+    "serve:ssr:employee-app": "node dist/employee-app/server/server.mjs",
+    "test:e2e": "playwright test --reporter=html"
   },
   "private": true,
   "dependencies": {
