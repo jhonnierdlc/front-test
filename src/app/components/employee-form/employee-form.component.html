@@ -1,0 +1,81 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Editar Empleado' : 'Nuevo Empleado' }}</h2>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    {{ isEditMode ? 'Cargando empleado...' : 'Guardando empleado...' }}
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-group">
+      <label for="name">Nombre *</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name"
+        class="form-control"
+        [class.error]="getFieldError('name')"
+        placeholder="Ingrese el nombre del empleado"
+        data-cy="employee-name"
+      >
+      <div *ngIf="getFieldError('name')" class="field-error">
+        {{ getFieldError('name') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="position">Posición</label>
+      <input 
+        type="text" 
+        id="position" 
+        formControlName="position"
+        class="form-control"
+        placeholder="Ingrese la posición del empleado"
+        data-cy="employee-position"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="salary">Salario</label>
+      <input 
+        type="number" 
+        id="salary" 
+        formControlName="salary"
+        class="form-control"
+        [class.error]="getFieldError('salary')"
+        placeholder="Ingrese el salario"
+        min="0"
+        step="0.01"
+        data-cy="employee-salary"
+      >
+      <div *ngIf="getFieldError('salary')" class="field-error">
+        {{ getFieldError('salary') }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="employeeForm.invalid || loading"
+        data-cy="submit-button"
+      >
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Empleado
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

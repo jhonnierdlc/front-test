@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<div class="app-container">
+  <header class="app-header">
+    <h1>{{ title }}</h1>
+    <nav class="nav-menu">
+      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      <a routerLink="/employees" class="nav-link">Lista de Empleados</a>
+      <a routerLink="/employees/new" class="nav-link">Nuevo Empleado</a>
+    </nav>
+  </header>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

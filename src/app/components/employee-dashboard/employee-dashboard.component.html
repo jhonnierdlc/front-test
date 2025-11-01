@@ -1,0 +1,90 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Dashboard de Empleados</h2>
+    <p>Resumen general del sistema de gestión de empleados</p>
+  </div>
+
+  <div *ngIf="loading" class="loading">Cargando datos del dashboard...</div>
+
+  <div *ngIf="!loading" class="dashboard-content">
+    <!-- Tarjetas de estadísticas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h3>{{ totalEmployees }}</h3>
+          <p>Total Empleados</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <h3>{{ averageSalary | currency : "USD" : "symbol" : "1.0-0" }}</h3>
+          <p>Salario Promedio</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <h3>{{ recentEmployees.length }}</h3>
+          <p>Empleados Recientes</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <div class="quick-actions">
+      <h3>Acciones Rápidas</h3>
+      <div class="action-buttons">
+        <a routerLink="/employees/new" class="action-btn primary">
+          <span class="btn-icon">➕</span>
+          Agregar Empleado
+        </a>
+        <a routerLink="/employees" class="action-btn secondary">
+          <span class="btn-icon">📋</span>
+          Ver Todos los Empleados
+        </a>
+      </div>
+    </div>
+
+    <!-- Empleados recientes -->
+    <div class="recent-employees" *ngIf="recentEmployees.length > 0">
+      <h3>Empleados Recientes</h3>
+      <div class="employee-cards">
+        <div *ngFor="let employee of recentEmployees" class="employee-card">
+          <div class="employee-info">
+            <h4>{{ employee.name }}</h4>
+            <p class="position">{{ employee.position || "Sin posición" }}</p>
+            <p class="salary">
+              {{ employee.salary | currency : "USD" : "symbol" : "1.0-0" }}
+            </p>
+          </div>
+          <div class="employee-actions">
+            <a
+              [routerLink]="['/employees/edit', employee.id]"
+              class="edit-link"
+            >
+              Editar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay empleados -->
+    <div *ngIf="totalEmployees === 0" class="no-data">
+      <div class="no-data-icon">📝</div>
+      <h3>¡Comienza agregando empleados!</h3>
+      <p>
+        No tienes empleados registrados aún. Agrega tu primer empleado para
+        comenzar.
+      </p>
+      <a routerLink="/employees/new" class="action-btn primary">
+        <span class="btn-icon">➕</span>
+        Agregar Primer Empleado
+      </a>
+    </div>
+  </div>
+</div>

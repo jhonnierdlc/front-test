@@ -1,0 +1,52 @@
+<div class="employee-list-container">
+  <div class="header">
+    <h2>Lista de Empleados</h2>
+    <a routerLink="/employees/new" class="btn btn-primary">
+      <i class="icon">+</i> Nuevo Empleado
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Cargando empleados...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+    <button (click)="loadEmployees()" class="btn btn-secondary">Reintentar</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="table-container">
+    <table class="employee-table" *ngIf="employees.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Posición</th>
+          <th>Salario</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.position || 'No especificado' }}</td>
+          <td>{{ employee.salary | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td class="actions">
+            <a [routerLink]="['/employees/edit', employee.id]" class="btn btn-edit">
+              Editar
+            </a>
+            <button (click)="deleteEmployee(employee.id!)" class="btn btn-delete">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="employees.length === 0" class="no-employees">
+      <p>No hay empleados registrados.</p>
+      <a routerLink="/employees/new" class="btn btn-primary">Agregar primer empleado</a>
+    </div>
+  </div>
+</div>
